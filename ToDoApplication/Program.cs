@@ -2,12 +2,16 @@ using Microsoft.EntityFrameworkCore;
 using ToDoApplication.Areas.Identity.Data;
 using ToDoApplication.Data;
 using Microsoft.AspNetCore.Identity;
+using ToDoApplication.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ToDoContextConnection") ?? throw new InvalidOperationException("Connection string 'ToDoContextConnection' not found.");
 
 builder.Services.AddDbContext<ToDoContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ToDoCon>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<ToDoApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ToDoContext>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
