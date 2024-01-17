@@ -6,9 +6,9 @@ namespace ToDoApplication.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the ToDoApplicationUser class
 public class ToDoApplicationUser : IdentityUser
 {
-    [Required(ErrorMessage = "Please Enter Your Name.")]
+    [Required(ErrorMessage = "Please Enter Your Full Name.")]
     [DataType(DataType.Text)]
     [Display(Name = "Name")]
-    public string UserName { get; set; } = string.Empty;
+    public string FullName { get; set; } = string.Empty;
 }
 
