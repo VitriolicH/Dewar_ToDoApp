@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using ToDoApplication.Areas.Identity.Data;
+using ToDoApplication.Data;
 using ToDoApplication.Models;
 
 namespace ToDoApplication.Controllers
@@ -12,6 +13,7 @@ namespace ToDoApplication.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<ToDoApplicationUser> _userManager;
+        public IList<Task>? UserTasks { get; set; }
 
         public HomeController(ILogger<HomeController> logger, UserManager<ToDoApplicationUser> userManager)
         {
@@ -21,7 +23,10 @@ namespace ToDoApplication.Controllers
 
         public IActionResult Index()
         {
-            ViewData["UserId"] = _userManager.GetUserId(this.User);
+            var userId = ViewData["UserId"] = _userManager.GetUserId(this.User);
+            
+
+
             return View();
         }
 

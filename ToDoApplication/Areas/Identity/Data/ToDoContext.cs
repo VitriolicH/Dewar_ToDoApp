@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ToDoApplication.Areas.Identity.Data;
+using ToDoApplication.Models;
 
 namespace ToDoApplication.Data;
 
@@ -11,7 +11,7 @@ public class ToDoContext : IdentityDbContext<ToDoApplicationUser>
         : base(options)
     {
     }
-
+    public DbSet<ToDoModel> Todos { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
