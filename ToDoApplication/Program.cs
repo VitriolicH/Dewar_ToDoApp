@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ToDoApplication.Areas.Identity.Data;
 using ToDoApplication.Data;
@@ -34,6 +35,12 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "Task",
+    pattern: "Home/Edit/{*id}",
+    defaults: new {Controller = "Task", Action = "Index" });
+
 
 app.MapRazorPages();
 

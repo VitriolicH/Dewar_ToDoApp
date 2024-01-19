@@ -1,0 +1,49 @@
+﻿@model ToDoModel
+
+<div class="justify-content-center">
+    <h2>Lest CHnage Yout Task !</h2>
+</div>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Edit" method="post">
+    <div class="mb-5 d-none">
+        <label asp-for="Id" class="form-label "></label>
+        <input asp-for="Id" class="form-control"  type="hidden"/>
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+    <div class="mb-5">
+        <label asp-for="TaskName" class="form-label ">What are We Going to do!?</label>
+        <input asp-for="TaskName" class="form-control" />
+        <span asp-validation-for="TaskName" class="text-danger"></span>
+    </div>
+    <div class="mb-5">
+        <label asp-for="Description" class="form-label ">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="mb-5">
+        <label asp-for="DueDate" class="form-label ">DueDate</label>
+        <input asp-for="DueDate" class="form-control" type="date"/>
+        <span asp-validation-for="DueDate" class="text-danger"></span>
+    </div>
+    <div class="mb-5">
+        <label asp-for="Status" class="form-label ">Status</label>
+        <select asp-for="Status" class="form-select">
+            <option value="Pending">Pending</option>
+            <option value="Done">Done</option>
+        </select>
+    </div>
+    <div class="mb-5 d-none">
+        <label asp-for="UserId" class="form-label ">UserId</label>
+        <input asp-for="UserId" class="form-control" value="@ViewData["UserId"]" type="hidden" />
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Edit Task</button>
+    <a asp-action="Index" class="btn btn-outline-danger">Cancel</a>
+</form>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

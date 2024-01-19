@@ -6,17 +6,10 @@
 <div class="text-center">
     <h1 class="display-4">Your Tasks</h1>
     <br />
-    <p>@ViewData["UserId"]</p>
+    <p></p>
 </div>
 
-<div class="row justify-content-center">
-    <div class="col-md-2 bg-primary justify-content-center">
-        <h2>
-            Sreach
-        </h2>
-    </div>
-    <div class="col-md-10">
-        <form asp-action="MarkAsComplete" method="post" asp-route-id="1">
+    <div class="col-md-12">
             <table class="table table-borderd table-striped mt-2">
                 <thead>
                     <tr>
@@ -43,23 +36,30 @@
                             <td>
                                 @if (Task.Status == "Pending")
                                 {
-                                    <button class="btn btn-secondary" type="submit" name="@nameof(ToDoModel.Id)" value="@Task.Id">Mark As Complete</button>
+@*                                     <button class="btn btn-secondary" type="submit" name="@nameof(ToDoModel.Id)" value="@Task.Id">Mark As Complete</button>
+     *@                         <form asp-action="MarkAsComplete" method="post">
+                                    <input type="hidden" name="@nameof(ToDoModel.Id)" value="@Task.Id" />
+                                    <button class="btn btn-secondary" type="submit">Mark As Complete</button>
+                                </form>
                                 }
                             </td>
                             <td>
-                                <a asp-action="Delete" icon="trash" class="btn btn-danger">Delete</a>
+@*                                 <a asp-action="Delete" asp-route-id="@Task.Id" icon="trash" class="btn btn-danger">Delete</a>
+ *@                             <form asp-action="Delete" method="post">
+                                    <input type="hidden" name="@nameof(ToDoModel.Id)" value="@Task.Id" />
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
                             </td>
                             <td>
                                 @if (Task.Status != "Done")
                                 {
-                                    <a asp-action="" icon="pen" class="btn btn-info">Edit</a>
+                                    <a asp-action="Edit" asp-route-id = "@Task.Id" icon="pen" class="btn btn-info">Edit</a>
                                 }
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-        </form>
         <form asp-action="DeleteCompletedTasks" method="post" asp-route-id="Index">
             <a asp-action="Add" class="btn btn-primary">Add a New Task</a>
             <button type="submit" class="btn btn-outline-danger">Delete All Completed Tasks</button>

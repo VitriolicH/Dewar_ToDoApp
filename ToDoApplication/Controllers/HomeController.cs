@@ -21,11 +21,10 @@ namespace ToDoApplication.Controllers
             this.cn = cn;
         }
 
-        public IActionResult Index(int Id)
+        public IActionResult Index()
         {
             var userId = ViewData["UserId"] = _userManager.GetUserId(this.User);
             IQueryable<ToDoModel> Query = cn.Todos.Where(x => x.UserId == userId).OrderByDescending(t => t.Status);
-
             return View(Query.ToList());
         }
 
@@ -73,11 +72,20 @@ namespace ToDoApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(ToDoModel model, int Id)
+        public IActionResult Delete(int id)
         {
-            var del = cn.Todos.Where(t => t.Id == model.Id && t.UserId == _userManager.GetUserId(this.User));
-            cn.Remove(del);
-            return RedirectToAction("Index", new { ID = Id });
+            ToDoModel modelToDelete = cn.Todos.Find(id)!;
+
+            if (modelToDelete == null)
+            {
+                return NotFound();
+            }
+
+            cn.Todos.Remove(modelToDelete);
+
+            cn.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
