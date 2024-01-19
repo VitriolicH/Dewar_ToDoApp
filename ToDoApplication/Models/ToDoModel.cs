@@ -17,11 +17,11 @@ public class ToDoModel
 
     [Required(ErrorMessage = "Please Select a Due Date ")]
     public DateTime DueDate { get; set; }
-    public string IsCompleted { get; set; } = "Pending";
+    public string Status { get; set; } = "Pending";
     public string UserId { get; set; } = string.Empty;
 
     [ValidateNever]
     public ToDoApplicationUser User { get; set; } = null!;
 
-    public bool TimeOver => IsCompleted == "Pending" && DueDate < DateTime.Today;
+    public bool TimeOver => Status == "Pending" && DueDate < DateTime.Today;
 }

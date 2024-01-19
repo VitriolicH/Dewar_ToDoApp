@@ -1,12 +1,68 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Taskify";
 }
+@model IEnumerable<ToDoModel>
 
 <div class="text-center">
-    <h1 class="display-4">Taskify</h1>
+    <h1 class="display-4">Your Tasks</h1>
     <br />
     <p>@ViewData["UserId"]</p>
+</div>
 
-    <p>@ViewBag.Tasks</p>
-
+<div class="row justify-content-center">
+    <div class="col-md-2 bg-primary justify-content-center">
+        <h2>
+            Sreach
+        </h2>
+    </div>
+    <div class="col-md-10">
+        <form asp-action="MarkAsComplete" method="post" asp-route-id="1">
+            <table class="table table-borderd table-striped mt-2">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ToDoModel Task in Model)
+                    {
+                        string Over = Task.TimeOver ? "bg-warning" : "";
+                        <tr>
+                            <td>@Task.Id</td>
+                            <td>@Task.TaskName</td>
+                            <td>@Task.Description</td>
+                            <td class="@Over">@Task.DueDate.ToShortDateString()</td>
+                            <td>@Task.Status</td>
+                            <td>
+                                @if (Task.Status == "Pending")
+                                {
+                                    <button class="btn btn-secondary" type="submit" name="@nameof(ToDoModel.Id)" value="@Task.Id">Mark As Complete</button>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="" icon="trash" class="btn btn-danger">Delete</a>
+                            </td>
+                            <td>
+                                @if (Task.Status != "Done")
+                                {
+                                    <a asp-action="" icon="pen" class="btn btn-info">Edit</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+        <form asp-action="DeleteCompletedTasks" method="post" asp-route-id="Index">
+            <a asp-action="Add" class="btn btn-primary">Add a New Task</a>
+            <button type="submit" class="btn btn-outline-danger">Delete All Completed Tasks</button>
+        </form>
+    </div>
 </div>
