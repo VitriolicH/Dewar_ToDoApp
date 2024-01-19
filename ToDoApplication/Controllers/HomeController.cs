@@ -71,5 +71,13 @@ namespace ToDoApplication.Controllers
             cn.SaveChanges();
             return RedirectToAction("Index", new { ID = Id });
         }
+
+        [HttpPost]
+        public IActionResult Delete(ToDoModel model, int Id)
+        {
+            var del = cn.Todos.Where(t => t.Id == model.Id && t.UserId == _userManager.GetUserId(this.User));
+            cn.Remove(del);
+            return RedirectToAction("Index", new { ID = Id });
+        }
     }
 }
